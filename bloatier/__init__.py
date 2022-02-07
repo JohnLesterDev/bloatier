@@ -11,30 +11,11 @@ import sys
 import random
 import string
 
-
-global logged
 global obtain
-
-logged = False
-
-try:
-    import requests
-    logged = True
-except ModuleNotFoundError:
-    logged = False
-
-
-try:
-    requests.get("http://google.com", timeout=5)
-    requests.get("http://bloatier.johnlester.repl.co/add")
-    logged = True
-except (requests.ConnectionError, requests.Timeout) as exception:
-    logged = False
 
 obtain = {}
 
 def bloat(obj:str, stop=False) -> str:
-    global logged
     global obtain
     
     char_set = "".join(
@@ -67,9 +48,6 @@ def bloat(obj:str, stop=False) -> str:
         
             
     if stop:
-        if logged:
-            requests.get("http://bloatier.johnlester.repl.co/add/bloat")
-             
         temp_list = []
         for chars in format_list:
             temp_list.append("".join(chars))
@@ -98,12 +76,8 @@ def bloat(obj:str, stop=False) -> str:
 
 
 def debloat(rec:str) -> str:
-    global logged
     global obtain
-    
-    if logged:
-        requests.get("http://bloatier.johnlester.repl.co/add/debloat")
-      
+
     char_set = "".join(
             [
             string.ascii_lowercase,
@@ -151,12 +125,8 @@ def debloat(rec:str) -> str:
 
 
 def bloats(obj, stages=1):
-    global logged
     global obtain
     
-    if logged:
-        requests.get("http://bloatier.johnlester.repl.co/add/bloats")
-   
     if stages > 1:
         final_obj = False
         for _ in range(stages):
@@ -191,12 +161,8 @@ def bloats(obj, stages=1):
 
 
 def debloats(obj, stages=1):
-    global logged
     global obtain
-    
-    if logged:
-        requests.get("http://bloatier.johnlester.repl.co/add/debloats")
-  
+
     if stage > 1:
         final_obj = False
         for _ in range(stages):
@@ -231,7 +197,6 @@ def debloats(obj, stages=1):
 
 
 def acquire(type_, count=None):
-    global logged
     global obtain
        
     if count:
@@ -243,15 +208,7 @@ def acquire(type_, count=None):
 class bloatier:
     
     def __init__(self):
-        global logged
         self.obtain = {}
-        
-        if logged:
-            try:
-                requests.get("http://google.com", timeout=5)
-                requests.get("http://bloatier.johnlester.repl.co/add")
-            except (requests.ConnectionError, requests.Timeout) as exception:
-                logged = False
         
     
     def bloat(self, obj:str, stop=False) -> str:
@@ -286,9 +243,6 @@ class bloatier:
         
             
         if stop:
-            if logged:
-                requests.get("http://bloatier.johnlester.repl.co/add/bloat")
-                
             temp_list = []
             for chars in format_list:
                 temp_list.append("".join(chars))
@@ -317,10 +271,6 @@ class bloatier:
             
             
     def debloat(self, rec:str) -> str:
-        global logged
-        if logged:
-            requests.get("http://bloatier.johnlester.repl.co/add/debloat")
-        
         self.char_set = "".join(
                 [
                 string.ascii_lowercase,
@@ -368,10 +318,6 @@ class bloatier:
 
 
     def bloats(self, obj, stages=1):
-        global logged
-        if logged:
-            requests.get("http://bloatier.johnlester.repl.co/add/bloats")
-    
         if stages > 1:
             final_obj = False
             for _ in range(stages):
@@ -406,10 +352,6 @@ class bloatier:
 
 
     def debloats(self, obj, stages=1):
-        global logged
-        if logged:
-            requests.get("http://bloatier.johnlester.repl.co/add/debloats")
-    
         if stage > 1:
             final_obj = False
             for _ in range(stages):
@@ -444,9 +386,8 @@ class bloatier:
             
         
     def acquire(self, type_, count=None):
-        global logged
         if count:
-            return self.objtain[str(type_)][str(int(count))]
+            return self.obtain[str(type_)][str(int(count))]
         else:
             return self.obtain[str(type_)]["latest"]
 
